@@ -5,7 +5,7 @@ CREATE TABLE person_details (
     person_id INT,
     person_firstname VARCHAR(20),
     person_lastname VARCHAR(20),
-    person_phnno INT
+    person_phnno INT 
 );
 desc person_details;
 alter table person_details add column person_city varchar(20);
