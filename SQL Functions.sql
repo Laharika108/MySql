@@ -38,3 +38,30 @@ SELECT orderNumber, orderDate, DATE_ADD(orderDate, INTERVAL 20 DAY) FROM orders;
 SELECT orderNumber, orderDate, DATE_FORMAT(orderDate, '%Y') FROM orders;
 SELECT orderNumber, orderDate, DATE_FORMAT(orderDate, '%D %b, %Y') FROM orders;
 SELECT orderNumber, orderDate, DATE_FORMAT(orderDate, '%D %M, %y') FROM orders;
+-- advanced functions
+SELECT orderNumber, orderDate, comments, IFNULL(comments, 'N/A') FROM orders;
+
+-- if the order is shipped in 2 days, display shipped early
+-- if the order is shipped in 3 to 4, display shipped
+-- if the order is shipped in 5 or more days, display shipped late
+SELECT orderNumber, orderDate, shippedDate, DATEDIFF(shippedDate, orderDate), 
+CASE
+	WHEN DATEDIFF(shippedDate, orderDate) <=2 THEN 'Shipped early'
+    WHEN DATEDIFF(shippedDate, orderDate) >2 && DATEDIFF(shippedDate, orderDate)<=4 THEN 'Shipped'
+    WHEN DATEDIFF(shippedDate, orderDate) >4 THEN 'Shipped late'
+END AS 'shipped status'
+FROM orders;
+
+-- aggregate functions
+-- find the count of products
+-- Sandhya
+SELECT COUNT(productCode) FROM products;
+-- find the total patment received
+SELECT SUM(amount) FROM payments;
+-- find out how many offices are there?
+-- Ankit Raj 
+SELECT COUNT(officeCode) FROM offices;
+-- find out the average amount received
+SELECT AVG(amount) FROM payments;
+-- find out the average amount received in the year 2004
+SELECT AVG(amount) AS average_amount_received FROM payments WHERE YEAR(paymentDate) = 2004;
